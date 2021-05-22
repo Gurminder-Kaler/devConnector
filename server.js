@@ -6,16 +6,25 @@ const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 // connect to mongoDb
 mongoose
-.connect(db)
+.connect(db, {
+    useNewUrlParser: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+    })
 .then ( ()=> console.log('MongoDb Connected'))
 .catch (err => console.log(err));
 
+app.use(passport.initialize());
+require('./config/passport')(passport);
+
+
 app.get('/', (req, res) => res.send('Hello2'));
 app.use(bodyParser.urlencoded({
-    extended false
+    extended: false
 }));
 app.use(bodyParser.json());
 // use Routes
